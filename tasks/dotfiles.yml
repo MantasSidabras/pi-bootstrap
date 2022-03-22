@@ -1,0 +1,40 @@
+- name: "Check out dotfiles from repository"
+  git:
+    repo: 'git@github.com:MantasSidabras/Dotfiles.git'
+    dest: ./tmp-dotfiles
+    accept_hostkey: yes
+    key_file: "/home/{{ username }}/.ssh/id_rsa"
+    force: yes
+  delegate_to: localhost
+  run_once: true
+  become: no
+
+- name: Copy zshrc
+  copy:
+    src: ./tmp-dotfiles/.config/zsh
+    dest: /home/{{ username }}/.config/
+    owner: "{{ username }}"
+    group: "{{ username }}"
+- name: Copy .zshenv 
+  copy:
+    src: ./tmp-dotfiles/.zshenv
+    dest: /home/{{ username }}/
+    owner: "{{ username }}"
+    group: "{{ username }}"
+- name: Setup zsh-syntax-highlighting
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+    dest: "/home/{{ username }}/.config/zsh/plugins/zsh-syntax-highlighting"
+    force: yes
+    version: master
+- name: Setup zsh-completions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-completions.git'
+    dest: "/home/{{ username }}/.config/zsh/plugins/zsh-completions"
+    force: yes
+    version: master
+- name: Setup zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+    dest: "/home/{{ username }}/.config/zsh/plugins/zsh-autosuggestions"
+    version: master

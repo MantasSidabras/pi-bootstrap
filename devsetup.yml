@@ -1,11 +1,9 @@
+---
 - hosts: localhost
   become: yes
   vars:
-    - user: 'pi'
     - dotfiles_repo: ''
     - ssh_key: '.ssh/id_rsa'
   tasks:
-    - name: "Install system packages"
-      apt:
-        name: [bat, exa, fzf, tldr, vim, zsh]
-        state: latest
+    - import_tasks: tasks/essentials.yml
+    - import_tasks: tasks/dotfiles.yml

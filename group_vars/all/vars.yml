@@ -1,0 +1,11 @@
+username: pi
+packages:
+  [
+    bat,
+    exa,
+    fzf,
+    tldr,
+    vim,
+    neovim,
+    zsh
+  ]
